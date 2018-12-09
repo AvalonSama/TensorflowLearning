@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 mnist = input_data.read_data_sets("MNIST_data/",reshape = True, one_hot = False)
 train_data = np.reshape(mnist.train.images,[-1,28,28])
