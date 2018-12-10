@@ -60,9 +60,9 @@ def load_inputs_document(input_file, word_id_file, max_sen_len, max_doc_len, enc
     
 def batch_index(length, batch_size, n_iter=100, test=False):
     index = range(length)
-    for j in xrange(n_iter):
+    for j in range(n_iter):
         if not test: np.random.shuffle(index)
-        for i in xrange(int(length / batch_size)+1):
+        for i in range(int(length / batch_size)+1):
             start = i * batch_size
             end = (i + 1) * batch_size
             if end > length: 
@@ -79,21 +79,21 @@ def load_w2v(w2v_file, embedding_dim, debug=False):
     # [0,0,...,0] represent absent words
     w2v.append([0.] * embedding_dim)
     word_dict = dict()
-    print 'loading word_embedding {}...'.format(w2v_file)
-    print 'wordlist: {} embedding_dim: {}'.format(words, embedding_dim)
+    print('loading word_embedding {}...'.format(w2v_file))
+    print('wordlist: {} embedding_dim: {}'.format(words, embedding_dim))
     cnt = 0
     for line in fp:
         cnt += 1
         line = line.split()
         word_dict[line[0]] = cnt
         w2v.append([float(v) for v in line[1:]])
-    print 'done!\n'
+    print('done!\n')
     w2v = np.asarray(w2v, dtype=np.float32)
     if debug:
-        print 'shape of w2v:',np.shape(w2v)
+        print('shape of w2v:',np.shape(w2v))
         word='the'
-        print 'id of \''+word+'\':',word_dict[word]
-        print 'vector of \''+word+'\':',w2v[word_dict[word]]
+        print('id of \''+word+'\':',word_dict[word])
+        print('vector of \''+word+'\':',w2v[word_dict[word]])
     return word_dict, w2v
 
 
@@ -101,7 +101,7 @@ def load_data_for_DSCNN_sen(input_file, word_to_id, max_doc_len, n_class=2, n_fo
     x1, y1, doc_len1 = [], [], []
     x2, y2, doc_len2 = [], [], []
 
-    print 'loading input {}...'.format(input_file)
+    print('loading input {}...'.format(input_file))
     for line in open(input_file):
         line = line.split('\t\t')
         wordlist = line[-1].split()
@@ -127,7 +127,7 @@ def load_data_for_DSCNN_sen(input_file, word_to_id, max_doc_len, n_class=2, n_fo
         doc_len.append(i)
         index+=1
 
-    print 'done!'
+    print('done!')
     if n_fold:
         return np.asarray(x1), np.asarray(y1), np.asarray(doc_len1), np.asarray(x2), np.asarray(y2), np.asarray(doc_len2)
     else :
@@ -138,7 +138,7 @@ def load_data_for_DSCNN_doc(input_file, word_to_id, max_doc_len, max_sen_len, n_
     x1, y1, doc_len1, sen_len1 = [], [], [], []
     x2, y2, doc_len2, sen_len2 = [], [], [], []
 
-    print 'loading input {}...'.format(input_file)
+    print('loading input {}...'.format(input_file))
     for line in open(input_file):
         line = line.split('\t\t')
         sentences = line[-1].split('<sssss>')
@@ -174,7 +174,7 @@ def load_data_for_DSCNN_doc(input_file, word_to_id, max_doc_len, max_sen_len, n_
         sen_len.append(tmp_sen)
         index+=1
 
-    print 'done!'
+    print('done!')
     if n_fold:
         return np.asarray(x1), np.asarray(y1), np.asarray(doc_len1), np.asarray(sen_len1), np.asarray(x2), np.asarray(y2), np.asarray(doc_len2), np.asarray(sen_len2)
     else :
